@@ -127,12 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\DES.cpp" />
     <ClCompile Include="src\RSA1024.cpp" />
     <ClCompile Include="src\RC4.cpp" />
     <ClCompile Include="src\SHA512.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\DES.h" />
     <ClInclude Include="src\RSA1024.h" />
     <ClInclude Include="src\RC4.h" />
     <ClInclude Include="src\SHA512.h" />
