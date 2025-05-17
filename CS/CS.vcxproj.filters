@@ -32,9 +32,6 @@
     <ClInclude Include="src\SHA512.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\RC4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\RSA1024.h">
       <Filter>Header Files</Filter>
     </ClInclude>
