@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DES.h" />
+    <ClInclude Include="src\RC4.h" />
     <ClInclude Include="src\RSA1024.h" />
     <ClInclude Include="src\SHA512.h" />
   </ItemGroup>
