@@ -91,6 +91,7 @@ int main() {
 		// Message Authentication assurance using RSA
 		std::string message;
 		std::cout << "Enter a message to encrypt: ";
+		std::cin.ignore();
 		std::getline(std::cin, message);  // Supports spaces
 		message = sha512_hex(message); // Hash the message with SHA-512
 
