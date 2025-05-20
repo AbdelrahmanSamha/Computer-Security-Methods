@@ -10,7 +10,7 @@
 #include "RC4.h"
 
 
-// Helper to convert hex string like "0F 77 A3 1F" to binary data
+// Helper to convert hex string to binary data
 std::string hexToBytes(const std::string& hex) {
 	std::string result;
 	std::istringstream iss(hex);
@@ -36,17 +36,16 @@ int main() {
 	char userchoice;
 
 	std::cout << "Choose Security Solution:\n\n";
-	std::cout << "  A. Data confidentiality assurance by symmetric encryption.\n\n";
-	std::cout << "  B. Message Authentication assurance.\n\n";
-	std::cout << "  C. Data confidentiality assurance by hybrid encryption (digital envelope).\n\n";
+	std::cout << "  a. Data confidentiality assurance by symmetric encryption.\n\n";
+	std::cout << "  b. Message Authentication assurance.\n\n";
+	std::cout << "  c. Data confidentiality assurance by hybrid encryption (digital envelope).\n\n";
 
 	std::cout << " your choice:";
 	std::cin >> userchoice;
 
 	std::cout << "user chose : " << userchoice<<std::endl;
 
-	//now that we have the user option saved in userchoice it should determine the program flow
-	//there should be 3 flows, each flow can use the classes presented in the src file that provide methods, to help with the flow of the program. 
+	
 
 	if (userchoice == 'a') {
 		std::string key, input;
@@ -78,7 +77,7 @@ int main() {
 			std::cout << std::dec << "\n";
 		}
 		else if (mode == '2') {
-			input = hexToBytes(input); // Convert hex to raw bytes
+			input = hexToBytes(input); // Convert hex to bytes
 			result = rc4.decrypt(input);
 			std::cout << "Decrypted output: " << result << "\n";
 		}
@@ -88,12 +87,12 @@ int main() {
 
 	}
 	else if (userchoice == 'b') {
-		// Message Authentication assurance using RSA
+		// message autentication  with RSA
 		std::string message;
 		std::cout << "Enter a message to encrypt: ";
 		std::cin.ignore();
-		std::getline(std::cin, message);  // Supports spaces
-		message = sha512_hex(message); // Hash the message with SHA-512
+		std::getline(std::cin, message);  
+		message = sha512_hex(message); // hash with SHA-512
 
 		RSA1024 rsa;
 		int p = 61;
@@ -129,16 +128,18 @@ int main() {
 		std::string message;
 		std::getline(std::cin, message);
 
-		// ——— 1) Symmetric key & CTR nonce ———
-		uint64_t sym_key = random_uint64();  // your helper to get a random 64?bit
-		uint64_t nonce = random_uint64();
+		// ——— 1) Symmetric key & CTR  ———
+		uint64_t sym_key = random_uint64();  
+		//uint64_t nonce = random_uint64(); // this can be used to generate a random counter  
+		uint64_t nonce = 1; // test with counter 1. 
 
+		std::cout << "\n";
 		std::cout << "Generated DES-CTR key: 0x"
 			<< std::hex << std::setw(16) << std::setfill('0') << sym_key << "\n"
 			<< "Generated nonce/counter:  0x"
 			<< std::hex << std::setw(16) << std::setfill('0') << nonce << std::dec << "\n\n";
 
-		// ——— 2) Symmetrically encrypt with DES?CTR ———
+		// ——— 2) Symmetrically encrypt with DES-CTR 
 		DES des;
 		auto sym_cipher = des.ctr_encrypt(message, sym_key, nonce);
 
@@ -165,14 +166,16 @@ int main() {
 
 		// ——— 4) Emit the “digital envelope” ———
 		std::cout << "----- DIGITAL ENVELOPE -----\n";
-		std::cout << "Nonce:      0x"
-			<< std::hex << std::setw(16) << std::setfill('0') << nonce << "\n";
+		std::cout << "Nonce:      0x"<< std::hex << std::setw(16) << std::setfill('0') << nonce << "\n";
 		std::cout << "Sym-Cipher: ";
 		for (auto b : sym_cipher)
 			std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)b;
+
+
 		std::cout << "\nWrappedKey: ";
-		for (int c : wrappedKey) std::cout << c << ' ';
-		std::cout << std::dec << "\n\n";
+
+		for (int c : wrappedKey) std::cout << c << ' '; 
+		std::cout << "\n\n";
 
 		// ——— 5) Reverse: unwrap sym_key then decrypt DES?CTR ———
 		std::string recovered_key_str = rsa.decryptConf(wrappedKey);
@@ -186,6 +189,9 @@ int main() {
 		std::cout << "Recovered plaintext: " << recovered << "\n";
 	}
 
+
+	std::cout << "\nPress Enter to exit...";
+	std::cin.get(); // Waits for user to press Enter
 	
 	return 0;
 }
