@@ -36,5 +36,8 @@ then if the flow requires another input from the user, it will show a text askin
 
 everything printed on the window should be as required by the assignment, from texts, ciphertexts, keys generated, etc...
 
+the program flow is wrapped in a do{}while() statement so that you dont need to reopen the executable after each run, 
+when the program finishes it asks the user if they wish to re run the program, entering Y or y will rerun the program, any other input will terminate the window. 
+
  
  
